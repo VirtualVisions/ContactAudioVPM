@@ -1,0 +1,14 @@
+{
+  "name": "com.vowgan.contact-audio",
+  "displayName": "Contact Audio",
+  "version": "3.3.4",
+  "unity": "2022.3",
+  "description": "Audio pooling system with Footsteps and Collision sounds.",
+  "author": {
+    "name": "Vowgan",
+    "email": "VowganVR@gmail.com"
+  },
+  "vpmDependencies": {
+    "com.vrchat.worlds": "^3.5"
+  }
+}
