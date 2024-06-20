@@ -1,6 +1,8 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using UdonSharp;
+using UdonSharpEditor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +14,7 @@ namespace Vowgan.Contact.Footsteps
     [CustomEditor(typeof(ContactFootsteps))]
     public class ContactFootstepsEditor : Editor
     {
+        private ContactFootsteps script;
         public VisualTreeAsset InspectorTree;
         
         private SerializedProperty propPresets;
@@ -20,6 +23,7 @@ namespace Vowgan.Contact.Footsteps
 
         private void OnEnable()
         {
+            script =  target as ContactFootsteps;
             propGroundLayers = serializedObject.FindProperty(nameof(ContactFootsteps.GroundLayers));
             propPresets = serializedObject.FindProperty(nameof(ContactFootsteps.Presets));
         }
@@ -30,8 +34,14 @@ namespace Vowgan.Contact.Footsteps
             
             InspectorTree.CloneTree(root);
 
-            IMGUIContainer groundLayersContainer = root.Query<IMGUIContainer>("GroundLayersContainer");
-            groundLayersContainer.onGUIHandler += GroundLayersContainerGUI;
+            Slider volumeMultiplierField = root.Query<Slider>("VolumeMultiplierField");
+            volumeMultiplierField.RegisterValueChangedCallback(evt =>
+            {
+                if (!Application.isPlaying) return;
+                UdonSharpEditorUtility.CopyUdonToProxy(script);
+                script.VolumeMultiplier = evt.newValue;
+                UdonSharpEditorUtility.CopyProxyToUdon(script);
+            });
 
             IMGUIContainer presetsContainer = root.Query<IMGUIContainer>("PresetsContainer");
             presetsContainer.onGUIHandler += PresetsContainerGUI;
@@ -74,15 +84,6 @@ namespace Vowgan.Contact.Footsteps
             }
             
             serializedObject.ApplyModifiedProperties();
-        }
-
-        private void GroundLayersContainerGUI()
-        {
-            using (EditorGUI.ChangeCheckScope changed = new EditorGUI.ChangeCheckScope())
-            {
-                EditorGUILayout.PropertyField(propGroundLayers);
-                if (changed.changed) serializedObject.ApplyModifiedProperties();
-            }
         }
 
         private void PresetsContainerGUI()

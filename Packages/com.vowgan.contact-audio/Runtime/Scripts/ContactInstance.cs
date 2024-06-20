@@ -84,7 +84,7 @@ namespace Vowgan.Contact
             transform.SetParent(parent);
         }
 
-        public void SetSiblingIndex(int index)
+        private void SetSiblingIndex(int index)
         {
             transform.SetSiblingIndex(index);
         }

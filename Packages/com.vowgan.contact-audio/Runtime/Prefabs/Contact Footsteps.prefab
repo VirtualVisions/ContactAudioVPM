@@ -117,6 +117,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: db0ccb3d04d63bb4598ea1d31f55c69e, type: 2}
   - {fileID: 11400000, guid: e67905f69f29790468b3b9398ed54a65, type: 2}
   UseFallbackPreset: 1
+  VolumeMultiplier: 1
   MinimumLandingVelocity: 1
   GroundLayers:
     serializedVersion: 2

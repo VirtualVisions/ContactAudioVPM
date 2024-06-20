@@ -1,18 +1,18 @@
 {
   "dependencies": {
     "com.vrchat.worlds": {
-      "version": "3.6.0-rel1208.3"
+      "version": "3.6.1"
     }
   },
   "locked": {
     "com.vrchat.worlds": {
-      "version": "3.6.0-rel1208.3",
+      "version": "3.6.1",
       "dependencies": {
-        "com.vrchat.base": "3.6.0-rel1208.3"
+        "com.vrchat.base": "3.6.1"
       }
     },
     "com.vrchat.base": {
-      "version": "3.6.0-rel1208.3",
+      "version": "3.6.1",
       "dependencies": {}
     }
   }

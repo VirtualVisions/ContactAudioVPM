@@ -12,6 +12,8 @@ namespace Vowgan.Contact
     public class ContactAudioPlayer : UdonSharpBehaviour
     {
 
+        public const int DEFAULT_DISTANCE = 32;
+
         public GameObject AudioPrefab;
         public int SourceCount = 64;
 
@@ -48,7 +50,7 @@ namespace Vowgan.Contact
             return instance;
         }
         
-        public ContactInstance _PlaySound(AudioClip[] clips, Vector3 position, float maxDistance = 32, float volume = 1, float pitch = 1)
+        public ContactInstance _PlaySound(AudioClip[] clips, Vector3 position, float maxDistance = DEFAULT_DISTANCE, float volume = 1, float pitch = 1)
         {
             if (clips == null || clips.Length == 0) return null;
             AudioClip clip = clips[UnityEngine.Random.Range(0, clips.Length)];
@@ -57,7 +59,7 @@ namespace Vowgan.Contact
             return instance;
         }
         
-        public ContactInstance _PlaySound(AudioClip clip, Vector3 position, float maxDistance = 32, float volume = 1, float pitch = 1)
+        public ContactInstance _PlaySound(AudioClip clip, Vector3 position, float maxDistance = DEFAULT_DISTANCE, float volume = 1, float pitch = 1)
         {
             if (clip == null)
             {

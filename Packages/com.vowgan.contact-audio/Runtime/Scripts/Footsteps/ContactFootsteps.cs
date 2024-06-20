@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon.Common;
@@ -8,7 +7,6 @@ namespace Vowgan.Contact.Footsteps
 {
     public class ContactFootsteps : ContactBehaviour
     {
-
         [ContactFootstepPreset] public UnityEngine.Object[] Presets;
 
         public Material[][] Materials;
@@ -19,6 +17,7 @@ namespace Vowgan.Contact.Footsteps
 
         public bool UseFallbackPreset = true;
 
+        public float VolumeMultiplier = 1;
         public float MinimumLandingVelocity = 1;
         public LayerMask GroundLayers;
 
@@ -99,11 +98,11 @@ namespace Vowgan.Contact.Footsteps
             CheckGround();
 
             AudioClip[] clips = usingPreset ? presetOverride.FootstepClips : FootstepClips[CurrentId];
-            
             ContactAudio._PlaySound(
                 clips,
                 localPlayer.GetPosition(),
-                volume: VolumeCurve.Evaluate(lastPlayerVelocityMagnitude));
+                ContactAudioPlayer.DEFAULT_DISTANCE,
+                VolumeCurve.Evaluate(lastPlayerVelocityMagnitude) * VolumeMultiplier);
         }
 
         private void PlayJumping()
@@ -111,21 +110,22 @@ namespace Vowgan.Contact.Footsteps
             CheckGround();
 
             AudioClip[] clips = usingPreset ? presetOverride.JumpClips : JumpClips[CurrentId];
-            
+
             ContactAudio._PlaySound(
                 clips,
                 localPlayer.GetPosition(),
-                volume: VolumeCurve.Evaluate(lastPlayerVelocityMagnitude));
+                ContactAudioPlayer.DEFAULT_DISTANCE,
+                VolumeCurve.Evaluate(lastPlayerVelocityMagnitude) * VolumeMultiplier);
         }
 
         private void PlayLanding()
         {
             CheckGround();
-            
+
             AudioClip[] clips = usingPreset ? presetOverride.LandingClips : LandingClips[CurrentId];
             AudioClip clip = clips[UnityEngine.Random.Range(0, clips.Length)];
-            
-            ContactAudio._PlaySound(clip, localPlayer.GetPosition());
+
+            ContactAudio._PlaySound(clip, localPlayer.GetPosition(), ContactAudioPlayer.DEFAULT_DISTANCE, VolumeMultiplier);
         }
 
         private void CheckGround()
@@ -138,7 +138,7 @@ namespace Vowgan.Contact.Footsteps
                 presetOverride = hit.transform.GetComponent<ContactFootstepOverride>();
                 usingPreset = presetOverride;
                 if (presetOverride) return;
-                
+
                 MeshRenderer meshRenderer = hit.transform.GetComponent<MeshRenderer>();
                 if (!meshRenderer) return;
 
@@ -158,7 +158,6 @@ namespace Vowgan.Contact.Footsteps
             {
                 CurrentId = 0;
             }
-
         }
     }
 }
