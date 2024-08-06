@@ -18,6 +18,7 @@ namespace Vowgan.Contact.Footsteps
         public bool UseFallbackPreset = true;
 
         public float VolumeMultiplier = 1;
+        public float MinimumLandingTime = 0.75f;
         public float MinimumLandingVelocity = 1;
         public LayerMask GroundLayers;
 
@@ -28,6 +29,7 @@ namespace Vowgan.Contact.Footsteps
         private float footstepInterval;
         private Vector3 lastPlayerVelocity;
         private float lastPlayerVelocityMagnitude;
+        private float lastGroundedTime;
         private bool newGrounded;
         private bool grounded;
         private bool usingPreset;
@@ -52,6 +54,7 @@ namespace Vowgan.Contact.Footsteps
 
             if (grounded)
             {
+                lastGroundedTime = Time.time;
                 lastPlayerVelocityMagnitude = lastPlayerVelocity.magnitude;
 
                 if (lastPlayerVelocityMagnitude >= MINIMUM_TRIGGER_VELOCITY)
@@ -71,7 +74,7 @@ namespace Vowgan.Contact.Footsteps
                 if (newGrounded)
                 {
                     fallingSpeed = Mathf.Abs(lastPlayerVelocity.y);
-                    if (fallingSpeed >= MinimumLandingVelocity)
+                    if (fallingSpeed >= MinimumLandingVelocity && Time.time - lastGroundedTime >= MinimumLandingTime)
                     {
                         PlayLanding();
                     }

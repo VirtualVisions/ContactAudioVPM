@@ -56,6 +56,11 @@ namespace Vowgan.Contact.SoundPhysics
         
         protected virtual void PlayClip(AudioClip[] clips, Vector3 position, Vector2 volumeRange, Vector2 pitchRange)
         {
+            if (clips == null || clips.Length == 0)
+            {
+                ContactAudioPlayer._Log("No valid clips array was provided.", this);
+                return;
+            }
             int index = UnityEngine.Random.Range(0, clips.Length);
             AudioClip clip = clips[index];
             float volume = UnityEngine.Random.Range(volumeRange.x, volumeRange.y);

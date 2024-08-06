@@ -63,7 +63,7 @@ namespace Vowgan.Contact
         {
             if (clip == null)
             {
-                _Log("Tried to play null clip.");
+                _Log("Tried to play null clip.", this);
                 return null;
             }
             
@@ -93,13 +93,13 @@ namespace Vowgan.Contact
                 return instance;
             }
 
-            _Log("No available Audio Sources found.");
+            _Log("No available Audio Sources found.", this);
             return null;
         }
         
-        public void _Log(string log)
+        public static void _Log(string log, UnityEngine.Object context)
         {
-            Debug.Log($"<color=yellow>{this.name}:</color> {log}", this);
+            Debug.Log($"<color=yellow>{context.name}:</color> {log}", context);
         }
     }
 }
