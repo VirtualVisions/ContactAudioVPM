@@ -145,6 +145,8 @@ namespace Vowgan.Contact.Footsteps
                 MeshRenderer meshRenderer = hit.transform.GetComponent<MeshRenderer>();
                 if (!meshRenderer) return;
 
+                if (!meshRenderer.sharedMaterial) return;
+                
                 int instanceId = meshRenderer.sharedMaterial.GetInstanceID();
 
                 for (int i = 0; i < MaterialIds.Length; i++)
