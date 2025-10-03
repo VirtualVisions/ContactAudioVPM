@@ -10,7 +10,7 @@ namespace Vowgan.Contact.Footsteps
     public class ContactFootstepOverride : ContactBehaviour
     {
         [Tooltip("Preset used to mimic a material.")] 
-        [ContactFootstepPreset] public UnityEngine.Object Preset;
+        [ContactFootstepPreset] public Object Preset;
 
         public AudioClip[] FootstepClips;
         public AudioClip[] JumpClips;

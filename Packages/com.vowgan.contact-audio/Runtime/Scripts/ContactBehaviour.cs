@@ -25,7 +25,7 @@ namespace Vowgan.Contact
         
         protected void _Log(string log)
         {
-            Debug.Log($"<color=yellow>{this.name}:</color> {log}");
+            Debug.Log($"<color=yellow>{name}:</color> {log}");
         }
     }
 }

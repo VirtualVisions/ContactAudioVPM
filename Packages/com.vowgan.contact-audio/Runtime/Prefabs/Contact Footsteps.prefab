@@ -118,10 +118,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e67905f69f29790468b3b9398ed54a65, type: 2}
   UseFallbackPreset: 1
   VolumeMultiplier: 1
+  MinimumLandingTime: 0.5
   MinimumLandingVelocity: 1
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2049
   FootstepRate:
     serializedVersion: 2
     m_Curve:

@@ -31,7 +31,7 @@ namespace Vowgan.Contact.Gunshots
         
         public override void OnPickupUseDown()
         {
-            if (UnityEngine.Physics.Raycast(FirePoint.position, FirePoint.forward, out RaycastHit hit, 100, HitLayers))
+            if (Physics.Raycast(FirePoint.position, FirePoint.forward, out RaycastHit hit, 100, HitLayers))
             {
                 MeshRenderer meshRenderer = hit.transform.GetComponent<MeshRenderer>();
                 if (!meshRenderer) return;

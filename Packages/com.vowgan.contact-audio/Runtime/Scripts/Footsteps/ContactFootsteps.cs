@@ -18,7 +18,7 @@ namespace Vowgan.Contact.Footsteps
         public bool UseFallbackPreset = true;
 
         public float VolumeMultiplier = 1;
-        public float MinimumLandingTime = 0.75f;
+        public float MinimumLandingTime = 0.5f;
         public float MinimumLandingVelocity = 1;
         public LayerMask GroundLayers;
 
@@ -74,9 +74,16 @@ namespace Vowgan.Contact.Footsteps
                 if (newGrounded)
                 {
                     fallingSpeed = Mathf.Abs(lastPlayerVelocity.y);
-                    if (fallingSpeed >= MinimumLandingVelocity && Time.time - lastGroundedTime >= MinimumLandingTime)
+                    if (Time.time - lastGroundedTime >= MinimumLandingTime)
                     {
-                        PlayLanding();
+                        if (fallingSpeed >= MinimumLandingVelocity)
+                        {
+                            PlayLanding();
+                        }
+                        else if (fallingSpeed >= MinimumLandingVelocity / 2)
+                        {
+                            PlayFootstep();
+                        }
                     }
                 }
             }
@@ -136,7 +143,13 @@ namespace Vowgan.Contact.Footsteps
             Vector3 position = localPlayer.GetPosition() + (Vector3.up / 2f);
             bool foundSurface = false;
 
-            if (UnityEngine.Physics.Raycast(position, Vector3.down, out RaycastHit hit, 1, GroundLayers))
+            if (Physics.Raycast(
+                    position, 
+                    Vector3.down,
+                    out RaycastHit hit, 
+                    1, 
+                    GroundLayers, 
+                    QueryTriggerInteraction.Ignore))
             {
                 presetOverride = hit.transform.GetComponent<ContactFootstepOverride>();
                 usingPreset = presetOverride;
